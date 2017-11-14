@@ -1,5 +1,7 @@
 module.exports = function account() {
+
   var output = {}
+
   var customerAccount = {
     balance: 0,
     name: 'Azat Mardan',
@@ -7,7 +9,7 @@ module.exports = function account() {
   }
 
   function setAccountType () {
-    if (customerAccount.checking === 1) {
+    if (customerAccount.checking === '1') {
       customerAccount.type = 'checking'
     } else {
       customerAccount.type = 'savings'
@@ -17,16 +19,20 @@ module.exports = function account() {
   var signupBonus = 250,
     deposit = 1000
 
-  var openAccount = function(account, deposit) {
+  var openAccount = function(account, deposit, signupBonus) {
+    setAccountType()
     account.balance += signupBonus
     output['New balance after signup bonus is '] = account.balance
     account.balance += deposit
   }
 
-  output['Account before opening'] = 'customerAccount'
+  output['Account before opening'] = customerAccount
 
-  openAccount(customerAccount)
+  openAccount(customerAccount, deposit, signupBonus)
   setAccountType()
   output['Account after opening'] = customerAccount
   return output
 }
+
+// simply adding account() does not work. Need to call module.exports()
+console.log(module.exports())
