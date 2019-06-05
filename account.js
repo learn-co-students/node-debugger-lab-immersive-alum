@@ -1,32 +1,42 @@
 module.exports = function account() {
-  var output = {}
+  var output = {};
   var customerAccount = {
     balance: 0,
-    name: 'Azat Mardan',
-    checking: '1'
-  }
+    name: "Azat Mardan",
+    checking: "1"
+  };
 
-  function setAccountType () {
-    if (customerAccount.checking === 1) {
-      customerAccount.type = 'checking'
+  // like object.assign but not shallow
+  deepCopyObject = obj => {
+    return JSON.parse(JSON.stringify(obj));
+  };
+
+  function setAccountType(account) {
+    let accountCopy = deepCopyObject(account);
+    if (accountCopy.checking == 1) {
+      accountCopy.type = "checking";
     } else {
-      customerAccount.type = 'savings'
+      accountCopy.type = "savings";
     }
+    return accountCopy;
   }
 
-  var signupBonus = 250,
-    deposit = 1000
+  var signupBonus = 250;
+  var deposit = 1000;
 
   var openAccount = function(account, deposit) {
-    account.balance += signupBonus
-    output['New balance after signup bonus is '] = account.balance
-    account.balance += deposit
-  }
+    let accountCopy = deepCopyObject(account);
+    accountCopy.balance += signupBonus;
+    output["New balance after signup bonus is "] = accountCopy.balance;
+    accountCopy.balance += deposit;
+    return accountCopy;
+  };
 
-  output['Account before opening'] = 'customerAccount'
+  output["Account before opening"] = customerAccount;
 
-  openAccount(customerAccount)
-  setAccountType()
-  output['Account after opening'] = customerAccount
-  return output
-}
+  let updatedAccount = openAccount(customerAccount, deposit);
+  const account = setAccountType(updatedAccount);
+  output["Account after opening"] = account;
+  console.log(output);
+  return output;
+};
