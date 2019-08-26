@@ -1,6 +1,6 @@
 module.exports = function() {
-  var output = {};
-  var customerAccount = {
+  const output = {};
+  const customerAccount = {
     balance: 0,
     name: "Azat Mardan",
     checking: "1"
@@ -14,10 +14,10 @@ module.exports = function() {
     }
   }
 
-  var signupBonus = 250,
+  const signupBonus = 250,
     deposit = 1000;
 
-  var openAccount = function(account, deposit) {
+  const openAccount = function(account, deposit) {
     account.balance += signupBonus;
     output["New balance after signup bonus is "] = account.balance;
     account.balance += deposit;
